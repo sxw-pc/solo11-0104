@@ -25,8 +25,8 @@ def ingest(path,db_path):
                 if old:
                     if old['sha256']!=h:db.execute('INSERT INTO issue(code,subject,detail) VALUES (?,?,?)',('identity_conflict',device,f'{device}:{seq}'))
                     continue
-                db.execute('INSERT INTO event(source_id,line_no,device,seq,kind,at,gate,ticket,ref_device,ref_seq,payload,sha256) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
-                    (sid,line,device,seq,kind,t,r.get('gate'),r.get('ticket'),r.get('ref_device'),r.get('ref_seq'),rawline,h));count+=1
+                eid=db.execute('INSERT INTO event(source_id,line_no,device,seq,kind,at,gate,ticket,ref_device,ref_seq,payload,sha256) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+                    (sid,line,device,seq,kind,t,r.get('gate'),r.get('ticket'),r.get('ref_device'),r.get('ref_seq'),rawline,h)).lastrowid;db.execute('INSERT INTO evidence(event_id,source_sha256,payload_sha256,role) VALUES (?,?,?,?)',(eid,filehash,h,'gate_event'));count+=1
             except (ValueError,KeyError,TypeError,json.JSONDecodeError) as exc:
                 db.execute('INSERT INTO issue(code,subject,detail) VALUES (?,?,?)',('parse_error',str(line),str(exc)))
     db.close();return {'imported':count,'duplicate_file':False}

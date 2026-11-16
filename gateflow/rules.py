@@ -7,6 +7,8 @@ VERSION='1'
 def evaluate(path):
     db=connect(path);result={}
     with db:
+        run_id=db.execute("INSERT INTO run(status,started_at) VALUES ('待接收',CURRENT_TIMESTAMP)").lastrowid
+        db.execute("UPDATE run SET status='已校验' WHERE id=?",(run_id,))
         db.execute('DELETE FROM occupancy');db.execute('DELETE FROM decision')
         db.execute("DELETE FROM issue WHERE code NOT IN ('parse_error','identity_conflict')")
         events=[dict(x) for x in db.execute('SELECT * FROM event ORDER BY at,id')]
@@ -65,4 +67,5 @@ def evaluate(path):
             status='超限' if peak[zone]>limit else ('证据不足' if unknown or codes else '可信')
             detail=json.dumps({'issues':codes,'capacity':limit,'ticket_types':tickets},ensure_ascii=False)
             db.execute('INSERT INTO decision VALUES (?,?,?,?,?)',(zone,status,peak[zone],detail,VERSION));result[zone]=status
+        db.execute("UPDATE run SET status=CASE WHEN EXISTS(SELECT 1 FROM decision WHERE status<>'可信') THEN '待核' ELSE '已判定' END,ended_at=CURRENT_TIMESTAMP WHERE id=?",(run_id,))
     db.close();return result
