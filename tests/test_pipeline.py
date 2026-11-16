@@ -25,7 +25,8 @@ def test_mapping_version(tmp_path):
     db=setup(tmp_path);c=connect(db);c.execute('DELETE FROM gate_map');c.commit();c.close();add(tmp_path,db,[event()]);evaluate(db)
     c=connect(db);assert c.execute("SELECT count(*) FROM issue WHERE code='map_missing'").fetchone()[0]==1
 def test_capacity(tmp_path):
-    db=setup(tmp_path);c=connect(db);c.execute('UPDATE zone SET capacity=0 WHERE id="A"');c.commit();c.close();add(tmp_path,db,[event()]);assert evaluate(db)['A']=='超限'
+    db=setup(tmp_path);c=connect(db);c.execute('UPDATE zone SET capacity=0 WHERE id="A"');c.commit();c.close()
+    add(tmp_path,db,[event(),event(seq=2,kind='heartbeat',gate=None,at='2026-01-01T08:02:00+00:00')]);assert evaluate(db)['A']=='超限'
 def test_sequence_gap(tmp_path):
     db=setup(tmp_path);add(tmp_path,db,[event(),event(seq=3,kind='exit',at='2026-01-01T09:00:00+00:00')]);evaluate(db)
     c=connect(db);assert c.execute("SELECT count(*) FROM issue WHERE code='sequence_gap'").fetchone()[0]>=1

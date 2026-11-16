@@ -20,6 +20,9 @@ def ingest(path,db_path):
                 r=json.loads(rawline);kind=r['kind'];device=str(r['device']);seq=int(r['seq']);t=r['at'];at(t)
                 if kind not in KINDS:raise ValueError('unknown_kind')
                 if kind!='heartbeat' and not r.get('gate'):raise ValueError('gate_required')
+                if kind in {'enter','exit','move'} and not r.get('ticket'):raise ValueError('ticket_required')
+                if kind=='cancel':
+                    if not r.get('ref_device') or not isinstance(r.get('ref_seq'),int):raise ValueError('cancel_ref_required')
                 h=hashlib.sha256(json.dumps(r,sort_keys=True,separators=(',',':')).encode()).hexdigest()
                 old=db.execute('SELECT sha256 FROM event WHERE device=? AND seq=?',(device,seq)).fetchone()
                 if old:

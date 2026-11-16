@@ -1,0 +1,10 @@
+{"kind":"enter","device":"D1","seq":1,"at":"2026-01-01T08:00:00+00:00","gate":"G1","ticket":"T1"}
+{"kind":"enter","device":"D1","seq":2,"at":"2026-01-01T08:01:00+00:00","gate":"G1","ticket":"T2"}
+{"kind":"enter","device":"D1","seq":3,"at":"2026-01-01T08:02:00+00:00","gate":"G1","ticket":"T3"}
+{"kind":"exit","device":"D1","seq":4,"at":"2026-01-01T08:02:40+00:00","gate":"G1","ticket":"T3"}
+{"kind":"heartbeat","device":"D1","seq":5,"at":"2026-01-01T08:05:00+00:00"}
+{"kind":"exit","device":"D1","seq":6,"at":"2026-01-01T09:11:00+00:00","gate":"G1","ticket":"T2"}
+{"kind":"heartbeat","device":"D1","seq":7,"at":"2026-01-01T09:12:00+00:00"}
+{"kind":"enter","device":"D2","seq":1,"at":"2026-01-01T09:00:00+00:00","gate":"G2","ticket":"T4"}
+{"kind":"move","device":"D2","seq":2,"at":"2026-01-01T09:05:00+00:00","gate":"G1","ticket":"T4"}
+{"kind":"heartbeat","device":"D2","seq":3,"at":"2026-01-01T09:20:00+00:00"}
