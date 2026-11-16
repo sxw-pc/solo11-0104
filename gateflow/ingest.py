@@ -20,7 +20,7 @@ def ingest(path,db_path):
                 r=json.loads(rawline);kind=r['kind'];device=str(r['device']);seq=int(r['seq']);t=r['at'];at(t)
                 if kind not in KINDS:raise ValueError('unknown_kind')
                 if kind!='heartbeat' and not r.get('gate'):raise ValueError('gate_required')
-                h=hashlib.sha256(rawline.encode()).hexdigest()
+                h=hashlib.sha256(json.dumps(r,sort_keys=True,separators=(',',':')).encode()).hexdigest()
                 old=db.execute('SELECT sha256 FROM event WHERE device=? AND seq=?',(device,seq)).fetchone()
                 if old:
                     if old['sha256']!=h:db.execute('INSERT INTO issue(code,subject,detail) VALUES (?,?,?)',('identity_conflict',device,f'{device}:{seq}'))
