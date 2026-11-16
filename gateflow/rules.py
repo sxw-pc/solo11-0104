@@ -53,7 +53,8 @@ def evaluate(path):
                 peak[z]=max(peak[z],n)
                 db.execute('INSERT INTO occupancy(at,zone,count,confidence,event_id) VALUES (?,?,?,?,?)',(e['at'],z,n,'未知' if unknown else '可信',e['id']))
         for device,items in sequences.items():
-            if not any(e['kind']=='heartbeat' for e in items):continue
+            if not any(e['kind']=='heartbeat' for e in items):
+                issues['heartbeat_gap'].append((device,None));unknown.update(e['gate'] for e in items if e['gate']);continue
             beat=sorted(heartbeats[device]);times=[at(e['at']) for e in items]
             if beat and (times[0]<beat[0]-timedelta(minutes=30) or times[-1]>beat[-1]+timedelta(minutes=30)):
                 issues['heartbeat_gap'].append((device,None));unknown.update(e['gate'] for e in items if e['gate'])

@@ -14,7 +14,7 @@ def add(tmp_path,db,items):
 def test_demo(tmp_path):
     p=demo(tmp_path);j=json.loads(p.read_text(encoding='utf-8'));assert j['decision'][0]['status']=='可信';assert p.with_suffix('.md').exists()
 def test_duplicate_file(tmp_path):
-    db=setup(tmp_path);assert ingest(FIX/'events.jsonl',db)['imported']==4;assert ingest(FIX/'events.jsonl',db)['duplicate_file']
+    db=setup(tmp_path);assert ingest(FIX/'events.jsonl',db)['imported']==5;assert ingest(FIX/'events.jsonl',db)['duplicate_file']
 def test_duplicate_entry(tmp_path):
     db=setup(tmp_path);add(tmp_path,db,[event(),event(seq=2,at='2026-01-01T08:01:00+00:00')]);evaluate(db)
     c=connect(db);assert c.execute("SELECT count(*) FROM issue WHERE code='duplicate_entry'").fetchone()[0]==1
