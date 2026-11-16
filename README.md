@@ -1,0 +1,7 @@
+# 客流闸机采录台
+
+离线读取虚构展馆的闸机事件、票种与入口映射，重建票据进出和分区在场数。仅使用本地合成材料，不联网。
+
+`python -m pip install -e .` 安装，`python -m gateflow demo` 一条命令生成 SQLite 与 JSON/Markdown 报告，`python -m gateflow --help` 查看独立命令，`python -m pytest -q` 运行测试。
+
+来源 Source 以原始字节 SHA-256 幂等保存；Event 以设备和序号去重，身份冲突进入 Issue。GateMap 按事件时间选版本；Ticket 保存票种；Occupancy 与 Decision 由不可覆盖事件重算。进、出、跨区移动要求票据状态相符，撤销必须引用存在的原事件。设备序号断档与心跳缺口降低结论可信度；容量超限单独报告。非法状态不会直接改变在场数。报告包含来源哈希、事件 ID、票种、分区时段与问题证据。业务状态为未入馆、在馆、离馆；结论为可信、超限、证据不足。错误码在 issue.code 中。

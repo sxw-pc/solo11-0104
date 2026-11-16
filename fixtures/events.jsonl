@@ -1,0 +1,4 @@
+{"kind":"enter","device":"D1","seq":1,"at":"2026-01-01T08:00:00+00:00","gate":"G1","ticket":"T1"}
+{"kind":"enter","device":"D1","seq":2,"at":"2026-01-01T08:05:00+00:00","gate":"G1","ticket":"T2"}
+{"kind":"move","device":"D1","seq":3,"at":"2026-01-01T08:10:00+00:00","gate":"G2","ticket":"T1"}
+{"kind":"exit","device":"D1","seq":4,"at":"2026-01-01T08:20:00+00:00","gate":"G2","ticket":"T1"}
