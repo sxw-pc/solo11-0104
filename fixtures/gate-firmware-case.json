@@ -1,0 +1,40 @@
+{
+  "target_version": "v2",
+  "devices": [
+    {
+      "id": "D1",
+      "gate": "G1",
+      "cell": "CELL-1",
+      "current_version": "v1"
+    },
+    {
+      "id": "D2",
+      "gate": "G1",
+      "cell": "CELL-1",
+      "current_version": "v1",
+      "failure": "commit_then_ack_lost"
+    },
+    {
+      "id": "D3",
+      "gate": "G2",
+      "cell": "CELL-2",
+      "current_version": "v1",
+      "failure": "reject"
+    }
+  ],
+  "order": [
+    "D1",
+    "D2",
+    "D3"
+  ],
+  "contracts": [
+    {
+      "id": "atomic_all_gates",
+      "authorized_by": "VENUE-OPS"
+    },
+    {
+      "id": "zone_isolated",
+      "authorized_by": "VENUE-OPS"
+    }
+  ]
+}
