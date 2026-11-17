@@ -1,0 +1,40 @@
+{
+  "sensors_file": "climate-sensors.csv",
+  "slots": [
+    {
+      "id": 0,
+      "start": "2026-01-01T08:00:00+00:00",
+      "energy_cents": 100
+    },
+    {
+      "id": 1,
+      "start": "2026-01-01T09:00:00+00:00",
+      "energy_cents": 1000
+    }
+  ],
+  "zones": [
+    {
+      "id": "A",
+      "max_c": 22,
+      "heat_c_per_slot": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "B",
+      "max_c": 21,
+      "heat_c_per_slot": [
+        2,
+        2
+      ]
+    }
+  ],
+  "cooling_c_per_action": 2,
+  "shared_cooling_capacity": 1,
+  "total_exposure_budget": 6,
+  "contracts": [
+    "min_energy",
+    "min_max_zone_exposure"
+  ]
+}
