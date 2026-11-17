@@ -1,0 +1,27 @@
+{
+  "asset": {
+    "id": "EX-1",
+    "owner": "OWNER-1",
+    "zone": "A",
+    "agreed_value_cents": 100000
+  },
+  "inspection": {
+    "report_id": "IR-1",
+    "inspector": "EXAMINER-1",
+    "signed_at": "2026-01-01T10:00:00+00:00",
+    "damage": "cracked_case",
+    "repairable": true,
+    "restoration_quote_cents": 30000,
+    "attachment": "damage-inspection.json",
+    "attachment_sha256": "4737d7b93147c77b6a502913dc3feb8068d8539a13033078f4fc4210bfdd6413"
+  },
+  "advance": {
+    "id": "ADV-1",
+    "paid_cents": 60000
+  },
+  "deductible_cents": 5000,
+  "contracts": [
+    "restoration_cost",
+    "agreed_value"
+  ]
+}
