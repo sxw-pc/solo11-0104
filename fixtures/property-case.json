@@ -11,20 +11,24 @@
       "kind": "deposit",
       "staff": "S1",
       "at": "2026-01-01T08:00:00+00:00",
-      "seal": "SEALED-1"
+      "seal": "SEALED-1",
+      "signed_by": "S1"
     },
     {
       "kind": "transfer",
       "from": "S1",
       "to": "S2",
       "at": "2026-01-01T09:00:00+00:00",
-      "seal": "SEALED-1"
+      "seal": "SEALED-1",
+      "accepted_by": "S2",
+      "signed_by": "S1"
     },
     {
       "kind": "seal_check",
       "staff": "S2",
       "at": "2026-01-01T09:15:00+00:00",
-      "seal": "SEALED-1"
+      "seal": "SEALED-1",
+      "signed_by": "S2"
     }
   ],
   "claims": [
