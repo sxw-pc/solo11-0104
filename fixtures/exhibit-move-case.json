@@ -1,0 +1,71 @@
+{
+  "depot": "N0",
+  "shift_start": "2026-01-01T08:00:00+00:00",
+  "shift_end": "2026-01-01T08:45:00+00:00",
+  "crews": [
+    {
+      "id": "C1",
+      "cart_capacity": 1,
+      "clearance": [
+        "A",
+        "B"
+      ]
+    }
+  ],
+  "moves": [
+    {
+      "exhibit": "X-A",
+      "deadline_minutes": 35
+    },
+    {
+      "exhibit": "X-B",
+      "deadline_minutes": 18
+    }
+  ],
+  "arcs": [
+    {
+      "from": "N0",
+      "to": "N1",
+      "minutes": 1
+    },
+    {
+      "from": "N1",
+      "to": "N0",
+      "minutes": 1
+    },
+    {
+      "from": "N1",
+      "to": "N2",
+      "minutes": 1
+    },
+    {
+      "from": "N2",
+      "to": "N1",
+      "minutes": 1
+    },
+    {
+      "from": "N2",
+      "to": "N11",
+      "minutes": 9
+    },
+    {
+      "from": "N11",
+      "to": "N2",
+      "minutes": 9
+    },
+    {
+      "from": "N11",
+      "to": "N12",
+      "minutes": 1
+    },
+    {
+      "from": "N12",
+      "to": "N11",
+      "minutes": 1
+    }
+  ],
+  "contracts": [
+    "min_walk",
+    "min_max_lateness"
+  ]
+}

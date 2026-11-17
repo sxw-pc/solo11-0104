@@ -1,0 +1,20 @@
+{
+  "exhibits": [
+    {
+      "id": "X-A",
+      "name": "Bronze Vessel",
+      "current_node": "N1",
+      "target_node": "N12",
+      "target_zone": "A",
+      "crate_units": 1
+    },
+    {
+      "id": "X-B",
+      "name": "Stone Tablet",
+      "current_node": "N11",
+      "target_node": "N2",
+      "target_zone": "B",
+      "crate_units": 1
+    }
+  ]
+}
