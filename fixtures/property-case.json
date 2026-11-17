@@ -1,0 +1,48 @@
+{
+  "item": {
+    "id": "L-1",
+    "deposit_ticket": "T1",
+    "seal": "SEALED-1"
+  },
+  "ticket_holder": "ALICE",
+  "receipt_serial": "SYNTHETIC-RECEIPT-R1",
+  "custody": [
+    {
+      "kind": "deposit",
+      "staff": "S1",
+      "at": "2026-01-01T08:00:00+00:00",
+      "seal": "SEALED-1"
+    },
+    {
+      "kind": "transfer",
+      "from": "S1",
+      "to": "S2",
+      "at": "2026-01-01T09:00:00+00:00",
+      "seal": "SEALED-1"
+    },
+    {
+      "kind": "seal_check",
+      "staff": "S2",
+      "at": "2026-01-01T09:15:00+00:00",
+      "seal": "SEALED-1"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C-OWNER",
+      "person": "ALICE",
+      "ticket": "T1",
+      "at": "2026-01-01T09:10:00+00:00"
+    },
+    {
+      "id": "C-BEARER",
+      "person": "BOB",
+      "receipt_serial": "SYNTHETIC-RECEIPT-R1",
+      "at": "2026-01-01T09:12:00+00:00"
+    }
+  ],
+  "contracts": [
+    "registered_owner",
+    "receipt_bearer"
+  ]
+}
