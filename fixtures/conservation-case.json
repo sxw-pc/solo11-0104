@@ -1,0 +1,61 @@
+{
+  "exhibits": [
+    {
+      "id": "E-A",
+      "zone": "A",
+      "name": "Rare Vessel"
+    },
+    {
+      "id": "E-B",
+      "zone": "A",
+      "name": "Map"
+    },
+    {
+      "id": "E-C",
+      "zone": "B",
+      "name": "Textile"
+    },
+    {
+      "id": "E-D",
+      "zone": "B",
+      "name": "Replica"
+    }
+  ],
+  "inspection": [
+    {
+      "exhibit": "E-A",
+      "condition": "treatable",
+      "treatment_slots": 2,
+      "priority": "heritage",
+      "seal": "OPEN"
+    },
+    {
+      "exhibit": "E-B",
+      "condition": "treatable",
+      "treatment_slots": 1,
+      "priority": "standard",
+      "seal": "OPEN"
+    },
+    {
+      "exhibit": "E-C",
+      "condition": "treatable",
+      "treatment_slots": 1,
+      "priority": "standard",
+      "seal": "OPEN"
+    },
+    {
+      "exhibit": "E-D",
+      "condition": "ready",
+      "treatment_slots": 0,
+      "priority": "standard",
+      "seal": "SEALED"
+    }
+  ],
+  "inspector": "CONSERVATOR-1",
+  "inspection_at": "2026-01-01T08:00:00+00:00",
+  "repair_slots": 2,
+  "contracts": [
+    "heritage_first",
+    "max_display_count"
+  ]
+}
