@@ -1,0 +1,32 @@
+{
+  "zone": "A",
+  "cleanup_shift": "2026-01-01T20:00:00+00:00",
+  "containers_file": "venue-waste-containers.csv",
+  "inspector": "CLEAN-TECH-1",
+  "contracts": [
+    {
+      "id": "closed_loop_sep",
+      "authorized_by": "VENUE-ENV",
+      "process_cert": "V-SEP-1",
+      "cert_valid_until": "2027-01-01T00:00:00+00:00",
+      "separation_rule": "all noncontaminant mass to reusable fluid, all contaminant mass to hazardous residue"
+    },
+    {
+      "id": "sealed_ship",
+      "authorized_by": "VENUE-ENV",
+      "carrier_license": "V-CAR-1",
+      "manifest_id": "V-M1",
+      "receipt": {
+        "id": "V-REC-1",
+        "carrier": "V-CAR-1",
+        "signed_by": "DRIVER-1",
+        "accepted_containers": [
+          "VC1",
+          "VC2"
+        ],
+        "accepted_kg": "12.000",
+        "at": "2026-01-01T21:00:00+00:00"
+      }
+    }
+  ]
+}
