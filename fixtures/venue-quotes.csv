@@ -1,0 +1,5 @@
+vendor,sku,unit_cents,available_qty,arrival_day,min_order_cents
+S,DISPLAY-CASE,5000,2,6,12000
+S,LABEL-SET,2000,1,6,12000
+F,DISPLAY-CASE,7000,2,2,0
+F,LABEL-SET,3000,1,2,0

@@ -1,0 +1,22 @@
+{
+  "zone_requirements": [
+    {
+      "zone": "A",
+      "sku": "DISPLAY-CASE",
+      "qty": 2,
+      "deadline_day": 4
+    },
+    {
+      "zone": "B",
+      "sku": "LABEL-SET",
+      "qty": 1,
+      "deadline_day": 7
+    }
+  ],
+  "quotes_file": "venue-quotes.csv",
+  "contracts": [
+    "min_total_cost",
+    "min_max_lateness"
+  ],
+  "planning_day": "2026-01-02"
+}
