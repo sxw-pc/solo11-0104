@@ -1,0 +1,95 @@
+{
+  "sales": [
+    {
+      "id": "S-1",
+      "ticket": "T1",
+      "customer": "CA",
+      "paid_cents": 9000
+    },
+    {
+      "id": "S-2",
+      "ticket": "T2",
+      "customer": "CA",
+      "paid_cents": 9000
+    },
+    {
+      "id": "S-3",
+      "ticket": "T3",
+      "customer": "CB",
+      "paid_cents": 14000
+    },
+    {
+      "id": "S-4",
+      "ticket": "T4",
+      "customer": "CC",
+      "paid_cents": 12000
+    },
+    {
+      "id": "S-5",
+      "ticket": "T5",
+      "customer": "CD",
+      "paid_cents": 6000
+    },
+    {
+      "id": "S-6",
+      "ticket": "T6",
+      "customer": "CE",
+      "paid_cents": 5000
+    }
+  ],
+  "claims": [
+    {
+      "id": "R-A",
+      "customer": "CA",
+      "tickets": [
+        "T1",
+        "T2"
+      ],
+      "wait_days": 30,
+      "review_required": true
+    },
+    {
+      "id": "R-B",
+      "customer": "CB",
+      "tickets": [
+        "T3"
+      ],
+      "wait_days": 10,
+      "review_required": true
+    },
+    {
+      "id": "R-C",
+      "customer": "CC",
+      "tickets": [
+        "T4"
+      ],
+      "wait_days": 5,
+      "review_required": true
+    },
+    {
+      "id": "R-D",
+      "customer": "CD",
+      "tickets": [
+        "T5"
+      ],
+      "wait_days": 1,
+      "review_required": false
+    },
+    {
+      "id": "R-E",
+      "customer": "CE",
+      "tickets": [
+        "T6"
+      ],
+      "wait_days": 40,
+      "review_required": false
+    }
+  ],
+  "review_slots": 2,
+  "contracts": [
+    "oldest_complete_claim",
+    "max_refunded_customers"
+  ],
+  "reason": "exhibition_cancellation",
+  "claim_deadline": "2026-01-10T00:00:00+00:00"
+}
