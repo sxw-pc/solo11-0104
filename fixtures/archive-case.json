@@ -1,0 +1,47 @@
+{
+  "gate": "G1",
+  "manifest": {
+    "source_id": "CAPTURE-1",
+    "revision": 2,
+    "chunk_sha256": [
+      "1e11a29dcb501981279667e1819a62703312cdab5e5e3a03cc565baea12a3e24",
+      "7431e51dac6507e86784a9af3f3fe03b2a9c691a07ffd3078d3b9d8662a7e526"
+    ],
+    "full_sha256": "da5d682be91d918d69fefb1f8dfadf0ac129757a76faab387fdd913293863be6",
+    "length": 338,
+    "authorized_by": "VENUE-EVIDENCE-OPS"
+  },
+  "shards": [
+    {
+      "path": "archive/A0.bin",
+      "replica": "A",
+      "chunk": 0
+    },
+    {
+      "path": "archive/A1.bin",
+      "replica": "A",
+      "chunk": 1
+    },
+    {
+      "path": "archive/B0.bin",
+      "replica": "B",
+      "chunk": 0
+    },
+    {
+      "path": "archive/B1.bin",
+      "replica": "B",
+      "chunk": 1
+    }
+  ],
+  "expected_event_count": 3,
+  "contracts": [
+    {
+      "id": "two_copy_quorum",
+      "authorized_by": "VENUE-EVIDENCE-OPS"
+    },
+    {
+      "id": "verified_mosaic",
+      "authorized_by": "VENUE-EVIDENCE-OPS"
+    }
+  ]
+}
