@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS decision(zone TEXT PRIMARY KEY,status TEXT NOT NULL,p
 CREATE TABLE IF NOT EXISTS evidence(id INTEGER PRIMARY KEY, event_id INTEGER NOT NULL REFERENCES event(id), source_sha256 TEXT NOT NULL, payload_sha256 TEXT NOT NULL, role TEXT NOT NULL, UNIQUE(event_id,role));
 CREATE TABLE IF NOT EXISTS exhibit(id TEXT PRIMARY KEY,name TEXT NOT NULL,current_node TEXT NOT NULL,target_node TEXT NOT NULL,target_zone TEXT NOT NULL REFERENCES zone(id),crate_units INTEGER NOT NULL);
 CREATE TABLE IF NOT EXISTS exhibit_move_case(id TEXT PRIMARY KEY,payload TEXT NOT NULL,digest TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS exhibit_plan(id INTEGER PRIMARY KEY,case_id TEXT NOT NULL REFERENCES exhibit_move_case(id),contract TEXT NOT NULL,status TEXT NOT NULL,objective TEXT NOT NULL,payload TEXT NOT NULL,digest TEXT NOT NULL,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,UNIQUE(case_id,contract));
 CREATE TABLE IF NOT EXISTS run(id INTEGER PRIMARY KEY, status TEXT NOT NULL CHECK(status IN ('待接收','已校验','待核','已判定','作废')), started_at TEXT NOT NULL, ended_at TEXT);
 """
 def connect(path):
