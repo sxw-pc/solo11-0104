@@ -4,6 +4,7 @@ from .store import connect
 from .ingest import ingest
 from .rules import evaluate
 from .report import report
+from .venue_procurement import register,plan_purchases,readiness_report
 def initialize(db_path,config):
     c=json.loads(Path(config).read_text(encoding='utf-8'));db=connect(db_path)
     with db:
@@ -21,12 +22,18 @@ def main():
     e=s.add_parser('evaluate');e.add_argument('--db',required=True)
     r=s.add_parser('report');r.add_argument('--db',required=True);r.add_argument('--out',required=True)
     x=s.add_parser('inspect');x.add_argument('--db',required=True)
+    vr=s.add_parser('venue-buy-register');vr.add_argument('--db',required=True);vr.add_argument('--case-id',required=True);vr.add_argument('--case',required=True)
+    vp=s.add_parser('venue-buy-plan');vp.add_argument('--db',required=True);vp.add_argument('--case-id',required=True);vp.add_argument('--plan-id')
+    vrep=s.add_parser('venue-buy-report');vrep.add_argument('--db',required=True);vrep.add_argument('--case-id',required=True);vrep.add_argument('--out',required=True)
     q=p.parse_args()
     if q.command=='demo':print(demo(q.workdir))
     elif q.command=='init':initialize(q.db,q.config)
     elif q.command=='ingest':print(ingest(q.file,q.db))
     elif q.command=='evaluate':print(evaluate(q.db))
     elif q.command=='report':print(report(q.db,q.out))
+    elif q.command=='venue-buy-register':print(json.dumps(register(q.db,q.case_id,q.case),ensure_ascii=False))
+    elif q.command=='venue-buy-plan':print(json.dumps(plan_purchases(q.db,q.case_id,q.plan_id),ensure_ascii=False))
+    elif q.command=='venue-buy-report':print(readiness_report(q.db,q.case_id,q.out))
     elif q.command=='inspect':
         db=connect(q.db);print(json.dumps([dict(z) for z in db.execute('SELECT * FROM decision')],ensure_ascii=False));db.close()
 if __name__=='__main__':main()
