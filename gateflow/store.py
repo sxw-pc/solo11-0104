@@ -13,10 +13,22 @@ CREATE TABLE IF NOT EXISTS occupancy(id INTEGER PRIMARY KEY,at TEXT NOT NULL,zon
 CREATE TABLE IF NOT EXISTS decision(zone TEXT PRIMARY KEY,status TEXT NOT NULL,peak INTEGER NOT NULL,detail TEXT NOT NULL,rule_version TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS evidence(id INTEGER PRIMARY KEY, event_id INTEGER NOT NULL REFERENCES event(id), source_sha256 TEXT NOT NULL, payload_sha256 TEXT NOT NULL, role TEXT NOT NULL, UNIQUE(event_id,role));
 CREATE TABLE IF NOT EXISTS ticket_holder(ticket TEXT PRIMARY KEY REFERENCES ticket(id),person TEXT NOT NULL);
-CREATE TABLE IF NOT EXISTS property_item(id TEXT PRIMARY KEY,deposit_ticket TEXT NOT NULL REFERENCES ticket(id),receipt_digest TEXT NOT NULL,seal TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS property_item(id TEXT PRIMARY KEY,deposit_ticket TEXT NOT NULL REFERENCES ticket(id),receipt_digest TEXT NOT NULL,seal TEXT NOT NULL,released INTEGER NOT NULL DEFAULT 0,version INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS property_case(id TEXT PRIMARY KEY,payload TEXT NOT NULL,digest TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS property_release(id INTEGER PRIMARY KEY,case_id TEXT NOT NULL REFERENCES property_case(id),item_id TEXT NOT NULL REFERENCES property_item(id),claim_id TEXT NOT NULL,contract TEXT NOT NULL,claimant TEXT NOT NULL,credential_digest TEXT NOT NULL,custodian TEXT NOT NULL,deliverer TEXT NOT NULL,item_version INTEGER NOT NULL,custody_digest TEXT NOT NULL,status TEXT NOT NULL CHECK(status IN ('authorized','released')),authorized_at TEXT NOT NULL,released_at TEXT);
+CREATE UNIQUE INDEX IF NOT EXISTS property_release_one_open ON property_release(item_id) WHERE status IN ('authorized','released');
+CREATE TABLE IF NOT EXISTS property_handover(id INTEGER PRIMARY KEY,release_id INTEGER NOT NULL REFERENCES property_release(id),deliverer TEXT NOT NULL,claimant TEXT NOT NULL,at TEXT NOT NULL,result TEXT NOT NULL CHECK(result IN ('released','rejected')),reason TEXT);
+CREATE TABLE IF NOT EXISTS property_attempt(id INTEGER PRIMARY KEY,case_id TEXT NOT NULL,claim_id TEXT,contract TEXT,claimant TEXT,credential_digest TEXT,verdict TEXT NOT NULL,reason TEXT,at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS run(id INTEGER PRIMARY KEY, status TEXT NOT NULL CHECK(status IN ('待接收','已校验','待核','已判定','作废')), started_at TEXT NOT NULL, ended_at TEXT);
 """
+MIGRATIONS=(
+    ('property_item','released','ALTER TABLE property_item ADD COLUMN released INTEGER NOT NULL DEFAULT 0'),
+    ('property_item','version','ALTER TABLE property_item ADD COLUMN version INTEGER NOT NULL DEFAULT 0'),
+)
 def connect(path):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
-    db=sqlite3.connect(path);db.row_factory=sqlite3.Row;db.executescript(SCHEMA);return db
+    db=sqlite3.connect(path,timeout=30);db.row_factory=sqlite3.Row;db.executescript(SCHEMA)
+    for table,column,sql in MIGRATIONS:
+        cols={r['name'] for r in db.execute(f'PRAGMA table_info({table})')}
+        if cols and column not in cols:db.execute(sql)
+    db.commit();return db
