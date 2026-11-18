@@ -13,8 +13,13 @@ CREATE TABLE IF NOT EXISTS occupancy(id INTEGER PRIMARY KEY,at TEXT NOT NULL,zon
 CREATE TABLE IF NOT EXISTS decision(zone TEXT PRIMARY KEY,status TEXT NOT NULL,peak INTEGER NOT NULL,detail TEXT NOT NULL,rule_version TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS evidence(id INTEGER PRIMARY KEY, event_id INTEGER NOT NULL REFERENCES event(id), source_sha256 TEXT NOT NULL, payload_sha256 TEXT NOT NULL, role TEXT NOT NULL, UNIQUE(event_id,role));
 CREATE TABLE IF NOT EXISTS archive_recovery_case(id TEXT PRIMARY KEY,payload TEXT NOT NULL,digest TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS archive_publish(case_id TEXT PRIMARY KEY,source_id TEXT NOT NULL,revision INTEGER NOT NULL,contract_id TEXT NOT NULL,file_path TEXT NOT NULL,full_sha256 TEXT NOT NULL,length INTEGER NOT NULL,source_row INTEGER REFERENCES source(id),event_count INTEGER NOT NULL,status TEXT NOT NULL CHECK(status IN ('published','blocked')),reason TEXT NOT NULL,published_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS archive_recovery_attempt(id INTEGER PRIMARY KEY,case_id TEXT NOT NULL,contract_id TEXT NOT NULL,source_id TEXT NOT NULL,revision INTEGER NOT NULL,manifest_digest TEXT NOT NULL,status TEXT NOT NULL CHECK(status IN ('published','blocked')),full_sha256 TEXT,length INTEGER,file_path TEXT,source_row INTEGER,event_count INTEGER,reason TEXT NOT NULL,report_json TEXT NOT NULL,attempted_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS archive_chunk_decision(id INTEGER PRIMARY KEY,attempt_id INTEGER NOT NULL REFERENCES archive_recovery_attempt(id),case_id TEXT NOT NULL,chunk INTEGER NOT NULL,replica TEXT NOT NULL,shard_path TEXT,observed_sha256 TEXT,expected_sha256 TEXT,byte_length INTEGER,decision TEXT NOT NULL CHECK(decision IN ('selected','witness','rejected','blocked')),reason TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS run(id INTEGER PRIMARY KEY, status TEXT NOT NULL CHECK(status IN ('待接收','已校验','待核','已判定','作废')), started_at TEXT NOT NULL, ended_at TEXT);
 """
 def connect(path):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
-    db=sqlite3.connect(path);db.row_factory=sqlite3.Row;db.executescript(SCHEMA);return db
+    db=sqlite3.connect(path);db.row_factory=sqlite3.Row
+    db.execute('PRAGMA busy_timeout=15000');db.execute('PRAGMA foreign_keys=ON')
+    db.executescript(SCHEMA);return db
