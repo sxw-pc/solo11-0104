@@ -4,6 +4,7 @@ from .store import connect
 from .ingest import ingest
 from .rules import evaluate
 from .report import report
+from .exhibit_claims import register,revise,settle,reconcile
 def initialize(db_path,config):
     c=json.loads(Path(config).read_text(encoding='utf-8'));db=connect(db_path)
     with db:
@@ -21,6 +22,10 @@ def main():
     e=s.add_parser('evaluate');e.add_argument('--db',required=True)
     r=s.add_parser('report');r.add_argument('--db',required=True);r.add_argument('--out',required=True)
     x=s.add_parser('inspect');x.add_argument('--db',required=True)
+    cr=s.add_parser('claim-register');cr.add_argument('--db',required=True);cr.add_argument('--case',required=True);cr.add_argument('--fixture',required=True)
+    cv=s.add_parser('claim-revise');cv.add_argument('--db',required=True);cv.add_argument('--case',required=True);cv.add_argument('--fixture',required=True)
+    cs=s.add_parser('claim-settle');cs.add_argument('--db',required=True);cs.add_argument('--case',required=True);cs.add_argument('--contract',required=True)
+    cp=s.add_parser('claim-report');cp.add_argument('--db',required=True);cp.add_argument('--out',required=True)
     q=p.parse_args()
     if q.command=='demo':print(demo(q.workdir))
     elif q.command=='init':initialize(q.db,q.config)
@@ -29,4 +34,8 @@ def main():
     elif q.command=='report':print(report(q.db,q.out))
     elif q.command=='inspect':
         db=connect(q.db);print(json.dumps([dict(z) for z in db.execute('SELECT * FROM decision')],ensure_ascii=False));db.close()
+    elif q.command=='claim-register':print(json.dumps(register(q.db,q.case,q.fixture),ensure_ascii=False))
+    elif q.command=='claim-revise':print(json.dumps(revise(q.db,q.case,q.fixture),ensure_ascii=False))
+    elif q.command=='claim-settle':print(json.dumps(settle(q.db,q.case,q.contract),ensure_ascii=False))
+    elif q.command=='claim-report':print(reconcile(q.db,q.out))
 if __name__=='__main__':main()
